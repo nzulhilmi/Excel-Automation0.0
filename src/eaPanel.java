@@ -1,11 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class eaPanel extends JPanel {
@@ -30,18 +32,37 @@ public class eaPanel extends JPanel {
 	
 	//Strings
 	private String TAMsString = "";
-	private String file1String = "";
-	private String file2String = "";
+	private static String file1String = "C:/Users/t-ninikf/Downloads/ExcelSheets/HanimBook.xlsx";
+	private static String file2String = "C:/Users/t-ninikf/Downloads/ExcelSheets/Book2.xlsx";
 	private String columnsString = "";
-	private String outputNameString = "";
+	private static String outputNameString = "output";
+	
+	//Others
+	private static List<String> TAMs = new ArrayList<String>(Arrays.asList(
+			"TAM", "SSR", "Organization Name", "Contract Title", 
+			"Contract Number", "Schedule Name", "Value", "TPID",
+			"Service Name", "Start Date", "End Date"));
+	
+	private static List<String> columns = new ArrayList<String>(Arrays.asList(
+			"abusmt", "alea", "amazahar", "colee",
+			"easonlau", "taufiqo", "tuchong", "mseng", "gurushr",
+			"huzaidim", "iansu", "jhew", "kansiva", "kkphoon",
+			"nabinti", "paerun", "sivask", "superuma"));
 	
 	public eaPanel() {
 		//GUI for TAMs
 		TAMLabel = new JLabel("TAMs:");
 		TAMLabel.setBounds(100, 20, 300, 30);
 		
+		TAMsString += TAMs.get(0);
+		for(int i = 1; i < TAMs.size(); i++) {
+			TAMsString += ", ";
+			TAMsString += TAMs.get(i);
+		}
+		
 		TAMsTextField = new JTextField();
 		TAMsTextField.setBounds(50, 60, 400, 50);
+		TAMsTextField.setText(TAMsString);
 		TAMsTextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -58,6 +79,7 @@ public class eaPanel extends JPanel {
 		
 		file1TextField = new JTextField();
 		file1TextField.setBounds(50, 170, 400, 50);
+		file1TextField.setText(file1String);
 		file1TextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -69,6 +91,7 @@ public class eaPanel extends JPanel {
 		
 		file2TextField = new JTextField();
 		file2TextField.setBounds(50, 240, 400, 50);
+		file2TextField.setText(file2String);
 		file2TextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -83,8 +106,15 @@ public class eaPanel extends JPanel {
 		columnsLabel = new JLabel("Columns: ");
 		columnsLabel.setBounds(100, 280, 300, 30);
 		
+		columnsString += columns.get(0);
+		for(int i = 1; i < columns.size(); i++) {
+			columnsString += ", ";
+			columnsString += columns.get(i);
+		}
+		
 		columnsTextField = new JTextField();
 		columnsTextField.setBounds(50, 350, 400, 50);
+		columnsTextField.setText(columnsString);
 		columnsTextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -101,6 +131,7 @@ public class eaPanel extends JPanel {
 		
 		outputNameTextField = new JTextField();
 		outputNameTextField.setBounds(50, 460, 400, 50);
+		outputNameTextField.setText(outputNameString + ".xlsx");
 		outputNameTextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -119,14 +150,7 @@ public class eaPanel extends JPanel {
 			public void actionPerformed(ActionEvent e)
 			{
 				//opens info about the program
-				try
-				{
-					
-				}
-				catch(Exception e1)
-				{
-					e1.printStackTrace();
-				}
+				
 			}
 		});
 		
@@ -137,14 +161,7 @@ public class eaPanel extends JPanel {
 			public void actionPerformed(ActionEvent e)
 			{
 				//run excel extraction
-				try
-				{
-					
-				}
-				catch(Exception e1)
-				{
-					e1.printStackTrace();
-				}
+				extract();
 			}
 		});
 		
@@ -155,14 +172,7 @@ public class eaPanel extends JPanel {
 			public void actionPerformed(ActionEvent e)
 			{
 				//close the program (window, frame, and panel)
-				try
-				{
-					
-				}
-				catch(Exception e1)
-				{
-					e1.printStackTrace();
-				}
+				
 			}
 		});
 		
@@ -186,6 +196,53 @@ public class eaPanel extends JPanel {
 		this.add(closeButton);
 	}
 	
-	//Get and set methods
+	private static void extract() {
+		try {
+			excelCompare.main(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
+	//Get and set methods
+	public static void setTAMs(List<String> list) {
+		TAMs = list;
+	}
+	
+	public static List<String> getTAMs() {
+		return TAMs;
+	}
+	
+	public static void setFile1(String s) {
+		file1String = s;
+	}
+	
+	public static String getFile1() {
+		return file1String;
+	}
+	
+	public static void setFile2(String s) {
+		file2String = s;
+	}
+	
+	public static String getFile2() {
+		return file2String;
+	}
+	
+	public static void setColumns(List<String> list) {
+		columns = list;
+	}
+	
+	public static List<String> getColumns() {
+		return columns;
+	}
+	
+	public static void setOutputFileName(String s) {
+		outputNameString = s;
+	}
+	
+	public static String getOutputFileName() {
+		return outputNameString;
+	}
 }

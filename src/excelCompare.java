@@ -1,40 +1,33 @@
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-import org.apache.poi.hssf.record.OldCellRecord;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class excelCompare {
 	
-	final static String[] columnsNeeded = {"TAM", "SSR", "Organization Name", "Contract Title", 
-											"Contract Number", "Schedule Name", "Value", "TPID",
-											"Service Name", "Start Date", "End Date"};
+	private static List<String> columnsNeeded = new ArrayList<String>();
 	
-	final static String[] miaColumns = {"TAM", "SISR", "Customer", "Contract Title",
+	private static String[] miaColumns = {"TAM", "SISR", "Customer", "Contract Title",
 										"Contract", "Schedule Name", "RM Value", "TPID",
 										"Service", "Start Date", "End Date"};
 	
-	final static String[] TAMs = {"abusmt", "alea", "amazahar", "colee",
-								  "easonlau", "taufiqo", "tuchong", "mseng", "gurushr",
-								  "huzaidim", "iansu", "jhew", "kansiva", "kkphoon",
-								  "nabinti", "paerun", "sivask", "superuma"};
+	private static List<String> TAMs = new ArrayList<String>();
+	
+	private static String filepath1;
+	private static String filepath2;
+	private static String outputFile;
 	
 	//The number represent the indexes (starts at 0)
 	final static int[] numberColumns = {6, 7};
@@ -44,8 +37,7 @@ public class excelCompare {
 		//if 2, proceed,
 		//else, abort.
 		
-		String filepath1 = "C:/Users/t-ninikf/Downloads/ExcelSheets/HanimBook.xlsx";
-		String filepath2 = "C:/Users/t-ninikf/Downloads/ExcelSheets/Book2.xlsx";
+		assign();
 		
 		File file1 = new File(filepath1);
 		File file2 = new File(filepath2);
@@ -187,8 +179,8 @@ public class excelCompare {
 		removeComma(output2);
 		//output2 is the file that contains all of the data
 
-		
-		write(file2, output2, sheetName1, "output1.xlsx", filepath2);
+		String outputFileName = outputFile + ".xlsx";
+		write(file2, output2, sheetName1, outputFileName, filepath2);
 	}
 	
 	//Traverse through the columns, get the indexes of the columns needed
@@ -271,10 +263,10 @@ public class excelCompare {
 		int rowSize = array.size();
 		
 		for(int i = 0; i < columnSize - 1; i++) {	
-			if(!(array.get(0).get(i).equals(columnsNeeded[i]))) {	
+			if(!(array.get(0).get(i).equals(columnsNeeded.get(i)))) {	
 				//look for index number of searched column/string
 				for(int j = i + 1; j < columnSize; j++) {
-					if(array.get(0).get(j).equals(columnsNeeded[i])) {
+					if(array.get(0).get(j).equals(columnsNeeded.get(i))) {
 						for(int m = 0; m < rowSize; m ++) {
 							Collections.swap(array.get(m), i, j);
 							
@@ -398,5 +390,54 @@ public class excelCompare {
 			}
 			System.out.println();
 		}
+	}
+	
+	public static void assign() {
+		columnsNeeded = eaPanel.getColumns();
+		TAMs = eaPanel.getTAMs();
+		filepath1 = eaPanel.getFile1();
+		filepath2 = eaPanel.getFile2();
+		outputFile = eaPanel.getOutputFileName();
+	}
+	
+	//GET and SET methods
+	public void setTAMs(List<String> list) {
+		TAMs = list;
+	}
+	
+	public static List<String> getTAMs() {
+		return TAMs;
+	}
+	
+	public void setFile1(String s) {
+		filepath1 = s;
+	}
+	
+	public static String getFile1() {
+		return filepath1;
+	}
+	
+	public void setFile2(String s) {
+		filepath2 = s;
+	}
+	
+	public static String getFile2() {
+		return filepath2;
+	}
+	
+	public List<String> getColumns() {
+		return columnsNeeded;
+	}
+	
+	public void setColumns(List<String> list) {
+		columnsNeeded = list;
+	}
+	
+	public void setOutputFileName(String s) {
+		outputFile = s;
+	}
+	
+	public static String getOutputFileName() {
+		return outputFile;
 	}
 }

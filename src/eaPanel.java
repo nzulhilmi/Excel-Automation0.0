@@ -478,6 +478,7 @@ public class eaPanel extends JPanel {
 						+ "<br>12. poi-scratchpad-3.16.jar"
 						+ "<br>13. xmlbeans-2.6.0.jar"
 						+ "<br>"
+						+ "<br>Visit the source code website for full documentation with Javadoc comments."
 						+ "<br>Recommended PC requirements: 4GB RAM, 2048x1536 screen resolution or better."
 						+ "<br>Runs on any OS as long as Java is installed."
 						+ "<br>"

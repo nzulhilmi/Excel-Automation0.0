@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class excelCompare {
-	
 	private static List<String> columnsNeeded = new ArrayList<String>();
 	
 	private static String[] miaColumns = {"TAM", "SISR", "Customer", "Contract Title",
@@ -33,10 +31,6 @@ public class excelCompare {
 	final static int[] numberColumns = {6, 7};
 			
 	public static void main(String[] args) throws IOException {
-		//check for number of arguments
-		//if 2, proceed,
-		//else, abort.
-		
 		assign();
 		
 		File file1 = new File(filepath1);
@@ -51,6 +45,8 @@ public class excelCompare {
 		else {
 			execute(file2, file1, filepath2);
 		}
+		
+		eaPanel.notifyFinish();
 	}
 	
 	//Read excel file
@@ -155,7 +151,6 @@ public class excelCompare {
 		ArrayList<ArrayList<String>> output = filter(excelSheet1);
 		
 		int rowSize = output.size();
-		int columnSize = output.get(0).size();
 		
 		sortColumns(output);
 		renameColumns(output);
@@ -168,12 +163,6 @@ public class excelCompare {
 		
 		read(file2, excelSheet2, sheetName1);
 		ArrayList<ArrayList<String>> output2 = filter2(excelSheet2);
-		
-		int rowSize2 = output2.size();
-		//int columnSize2 = output2.get(0).size();
-		for(int i = 1; i < rowSize2; i++) {
-			//formatDate_(output2.get(i), columnSize2 - 1);
-		}
 		
 		addRows(output, output2);
 		removeComma(output2);
@@ -190,7 +179,7 @@ public class excelCompare {
 		int columnSize = array.get(0).size();
 		
 		for(int i = 0; i < columnSize; i++) {
-			if(Arrays.asList(columnsNeeded).contains(array.get(0).get(i))) {
+			if(columnsNeeded.contains(array.get(0).get(i))) {
 				columnNumbers.add(i);
 			}
 		}
@@ -205,7 +194,7 @@ public class excelCompare {
 		int rowSize = array.size();
 		
 		for(int i = 0; i < rowSize; i++) {
-			if(Arrays.asList(TAMs).contains(array.get(i).get(0))) {
+			if(TAMs.contains(array.get(i).get(0))) {
 				rowNumbers.add(i);
 			}
 		}
@@ -269,14 +258,12 @@ public class excelCompare {
 					if(array.get(0).get(j).equals(columnsNeeded.get(i))) {
 						for(int m = 0; m < rowSize; m ++) {
 							Collections.swap(array.get(m), i, j);
-							
 						}
 					}
 				}
 			}
 		}
 	}
-	
 	
 	//Helper method for formatDate
 	public static String formatDate(String date) {
@@ -364,7 +351,6 @@ public class excelCompare {
 	//Remove commas, i.e. 20,000 to 20000
 	public static void removeComma(ArrayList<ArrayList<String>> array) {
 		int rowNum = array.size();
-		int colNum = array.get(0).size();
 		
 		for(int i = 0; i < rowNum; i++) {
 			String value = array.get(i).get(6);
@@ -392,6 +378,7 @@ public class excelCompare {
 		}
 	}
 	
+	//Get all the values from eaPanel
 	public static void assign() {
 		columnsNeeded = eaPanel.getColumns();
 		TAMs = eaPanel.getTAMs();

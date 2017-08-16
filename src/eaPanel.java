@@ -1,23 +1,31 @@
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 public class eaPanel extends JPanel {
 	
 	//Text Fields
-	private JTextField TAMsTextField;
-	private JTextField file1TextField;
-	private JTextField file2TextField;
-	private JTextField columnsTextField;
-	private JTextField outputNameTextField;
+	private static JTextField TAMsTextField;
+	private static JTextField file1TextField;
+	private static JTextField file2TextField;
+	private static JTextField columnsTextField;
+	private static JTextField outputNameTextField;
 	
 	//Buttons
 	private JButton infoButton;
@@ -31,19 +39,25 @@ public class eaPanel extends JPanel {
 	private JLabel outputNameLabel;
 	
 	//Strings
-	private String TAMsString = "";
+	private static String TAMsString = "";
 	private static String file1String = "C:/Users/t-ninikf/Downloads/ExcelSheets/HanimBook.xlsx";
 	private static String file2String = "C:/Users/t-ninikf/Downloads/ExcelSheets/Book2.xlsx";
-	private String columnsString = "";
+	private static String columnsString = "";
 	private static String outputNameString = "output";
 	
+	//Dialogs
+	private static JDialog infoDialog = new JDialog();
+	private static JDialog finishDialog = new JDialog();
+	private static JDialog fileErrorDialog = new JDialog();
+	private static JDialog inputErrorDialog = new JDialog();
+	
 	//Others
-	private static List<String> TAMs = new ArrayList<String>(Arrays.asList(
+	private static List<String> columns = new ArrayList<String>(Arrays.asList(
 			"TAM", "SSR", "Organization Name", "Contract Title", 
 			"Contract Number", "Schedule Name", "Value", "TPID",
 			"Service Name", "Start Date", "End Date"));
 	
-	private static List<String> columns = new ArrayList<String>(Arrays.asList(
+	private static List<String> TAMs = new ArrayList<String>(Arrays.asList(
 			"abusmt", "alea", "amazahar", "colee",
 			"easonlau", "taufiqo", "tuchong", "mseng", "gurushr",
 			"huzaidim", "iansu", "jhew", "kansiva", "kkphoon",
@@ -52,6 +66,7 @@ public class eaPanel extends JPanel {
 	public eaPanel() {
 		//GUI for TAMs
 		TAMLabel = new JLabel("TAMs:");
+		TAMLabel.setFont(new Font("Serif", Font.BOLD, 28));
 		TAMLabel.setBounds(100, 20, 300, 30);
 		
 		TAMsString += TAMs.get(0);
@@ -61,7 +76,8 @@ public class eaPanel extends JPanel {
 		}
 		
 		TAMsTextField = new JTextField();
-		TAMsTextField.setBounds(50, 60, 400, 50);
+		TAMsTextField.setFont(new Font("Arial", Font.PLAIN, 24));
+		TAMsTextField.setBounds(50, 60, 700, 50);
 		TAMsTextField.setText(TAMsString);
 		TAMsTextField.addActionListener(new ActionListener()
 		{
@@ -75,10 +91,12 @@ public class eaPanel extends JPanel {
 		
 		//GUI for Files
 		fileLabel = new JLabel("Excel files: ");
+		fileLabel.setFont(new Font("Serif", Font.BOLD, 28));
 		fileLabel.setBounds(100, 130, 300, 30);
 		
 		file1TextField = new JTextField();
-		file1TextField.setBounds(50, 170, 400, 50);
+		file1TextField.setFont(new Font("Arial", Font.PLAIN, 24));
+		file1TextField.setBounds(50, 170, 700, 50);
 		file1TextField.setText(file1String);
 		file1TextField.addActionListener(new ActionListener()
 		{
@@ -90,7 +108,8 @@ public class eaPanel extends JPanel {
 		});
 		
 		file2TextField = new JTextField();
-		file2TextField.setBounds(50, 240, 400, 50);
+		file2TextField.setFont(new Font("Arial", Font.PLAIN, 24));
+		file2TextField.setBounds(50, 225, 700, 50);
 		file2TextField.setText(file2String);
 		file2TextField.addActionListener(new ActionListener()
 		{
@@ -104,8 +123,8 @@ public class eaPanel extends JPanel {
 		
 		//GUI for columns
 		columnsLabel = new JLabel("Columns: ");
-		columnsLabel.setBounds(100, 280, 300, 30);
-		
+		columnsLabel.setFont(new Font("Serif", Font.BOLD, 28));
+		columnsLabel.setBounds(100, 290, 300, 30);
 		columnsString += columns.get(0);
 		for(int i = 1; i < columns.size(); i++) {
 			columnsString += ", ";
@@ -113,7 +132,8 @@ public class eaPanel extends JPanel {
 		}
 		
 		columnsTextField = new JTextField();
-		columnsTextField.setBounds(50, 350, 400, 50);
+		columnsTextField.setFont(new Font("Arial", Font.PLAIN, 24));
+		columnsTextField.setBounds(50, 330, 700, 50);
 		columnsTextField.setText(columnsString);
 		columnsTextField.addActionListener(new ActionListener()
 		{
@@ -127,11 +147,13 @@ public class eaPanel extends JPanel {
 		
 		//GUI for output file name
 		outputNameLabel = new JLabel("Output file name: ");
-		outputNameLabel.setBounds(100, 390, 300, 30);
+		outputNameLabel.setFont(new Font("Serif", Font.BOLD, 28));
+		outputNameLabel.setBounds(100, 400, 300, 30);
 		
 		outputNameTextField = new JTextField();
-		outputNameTextField.setBounds(50, 460, 400, 50);
-		outputNameTextField.setText(outputNameString + ".xlsx");
+		outputNameTextField.setFont(new Font("Arial", Font.PLAIN, 24));
+		outputNameTextField.setBounds(50, 440, 700, 50);
+		outputNameTextField.setText(outputNameString);
 		outputNameTextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -144,35 +166,53 @@ public class eaPanel extends JPanel {
 		
 		//GUI for buttons
 		infoButton = new JButton("Info");
-		infoButton.setBounds(100, 550, 150, 50);
+		infoButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		infoButton.setBounds(50, 550, 150, 50);
 		infoButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				//opens info about the program
-				
+				if(!infoDialog.isShowing()) {
+					createDialog();
+				}
 			}
 		});
 		
 		extractButton = new JButton("Extract");
-		extractButton.setBounds(250, 550, 150, 50);
+		extractButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		extractButton.setBounds(200, 550, 150, 50);
 		extractButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//run excel extraction
-				extract();
+				TAMsString = TAMsTextField.getText();
+				columnsString = columnsTextField.getText();
+				file1String = file1TextField.getText();
+				file2String = file2TextField.getText();
+				outputNameString = outputNameTextField.getText();
+				
+				//check if files are ok
+				if(fileChecker(file1String, file2String)) {
+					//run excel extraction
+					extract();
+				}
+				else {
+					notifyFile();
+				}
 			}
 		});
 		
 		closeButton = new JButton("Close");
-		closeButton.setBounds(400, 550, 150, 50);
+		closeButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		closeButton.setBounds(350, 550, 150, 50);
 		closeButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				//close the program (window, frame, and panel)
-				
+				//frame.dispose();
+				System.exit(0);
 			}
 		});
 		
@@ -197,15 +237,226 @@ public class eaPanel extends JPanel {
 	}
 	
 	private static void extract() {
-		try {
-			excelCompare.main(null);
+		try {			
+			if(stringChecker(TAMsString) && stringChecker(columnsString)) {
+				columns = convertColumns(columnsString);
+				TAMs = convert(TAMsString);
+				
+				excelCompare.main(null);
+			}
+			else {
+				//print error message
+				notifyInput();
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	//Get and set methods
+	//Check to make sure the input is in the correct format
+	public static Boolean stringChecker(String s) {
+		boolean b1 = true;
+		
+		s = s.replaceAll("\\s+", ""); //remove all the white spaces
+		
+		if(s.charAt(0) == ' ') { //check if first character is a comma
+			b1 = false;
+		}
+		
+		for (int i = 0; i < s.length() - 2; i++) { // check if there's two commas side by side
+			if (s.charAt(i) == ',' && s.charAt(i + 1) == ',') {
+				b1 = false;
+			}
+		}
+		
+		String temp = s.replaceAll(",", ""); //remove all the commas
+		
+		if(!temp.matches("[a-zA-Z]+")) { //check if there is only letters
+			b1 = false;
+		}
+		
+		return b1;
+	}
+	
+	//Convert string to List<String>
+	public static List<String> convert(String s) {
+		s = s.replaceAll("\\s+", ""); //remove all the white spaces
+		List<String> split = Arrays.asList(s.split(",")); //split string into elements separated by ','
+		
+		return split;
+	}
+	
+	//Same as convert, but for columns. Since the name of the columns has white space(s)
+	public static List<String> convertColumns(String s) {
+		List<String> split = Arrays.asList(s.split(","));
+		
+		for(int i = 0; i < split.size(); i++) { //remove white spaces at the front/end of the string
+			if(split.get(i).charAt(0) == ' ') { //check first character of the string
+				split.set(i, split.get(i).substring(1));
+			}
+			if(split.get(i).charAt(split.get(i).length() - 1) == ' ') { //check last character of the string
+				split.set(i, split.get(i).substring(0, split.get(i).length() - 2));
+			}
+		}
+		
+		return split;
+	}
+	
+	//Check if files exist
+	public static boolean fileChecker(String f1, String f2) {
+		boolean b1 = false;
+		
+		File file1 = new File(f1);
+		File file2 = new File(f2);
+		
+		if(file1.exists() && file2.exists() && !file1.isDirectory() && !file2.isDirectory()) {
+			b1 = true;
+		}
+		
+		return b1;
+	}
+	
+	//Notify when files don't exist or it is a directory
+	public static void notifyFile() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				JLabel fileErrorLabel = new JLabel("<html>Check if:"
+						+ "<br>1. Files exist"
+						+ "<br>2. Files are not directories/folders"
+						+ "<br>3. Files are closed before running the program</html>", 
+						SwingConstants.CENTER);
+				fileErrorLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+				
+				fileErrorDialog.add(fileErrorLabel);
+				fileErrorDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				fileErrorDialog.setTitle("Error: Files");
+				fileErrorDialog.setSize(new Dimension(400, 300));
+				fileErrorDialog.setVisible(true);
+				fileErrorDialog.setLocationRelativeTo(null);
+				fileErrorDialog.setResizable(false);
+			}
+		});
+	}
+	
+	//Notify when inputs aren't filled properly
+	public static void notifyInput() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub	
+				JLabel inputErrorLabel = new JLabel("Make sure you typed in the inputs correctly!", 
+						SwingConstants.CENTER);
+				inputErrorLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+				
+				inputErrorDialog.add(inputErrorLabel);
+				inputErrorDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				inputErrorDialog.setTitle("Error: Inputs");
+				inputErrorDialog.setSize(new Dimension(500, 300));
+				inputErrorDialog.setVisible(true);
+				inputErrorDialog.setLocationRelativeTo(null);
+				inputErrorDialog.setResizable(false);
+			}
+		});
+	}
+	
+	//Notify when program finishes extracting
+	public static void notifyFinish() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				JLabel finishLabel = new JLabel("Extraction finished!", SwingConstants.CENTER);
+				finishLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+				
+				finishDialog.add(finishLabel);
+				finishDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				finishDialog.setTitle("Complete");
+				finishDialog.setSize(new Dimension(300, 200));
+				finishDialog.setVisible(true);
+				finishDialog.setLocationRelativeTo(null);
+				finishDialog.setResizable(false);
+			}
+		});
+	}
+	
+	//Create a dialog for the info
+	private static void createDialog() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				JTextPane infoLabel = new JTextPane();
+				infoLabel.setContentType("text/html");
+				infoLabel.setText("<html><left><font size=\"5\">"
+						+ "Things to check before extracting: "
+						+ "<br>1. There is only ONE excel sheet/tab in one excel file."
+						+ "<br>2. There are only letters/alphabets in TAMs and columns fields."
+						+ "<br>3. For file path, use forward slashes '/' instead of backward '\\'."
+						+ "<br>		ie. C:/Users/t-ninikf/file.exe"
+						+ "<br>4. Make sure column names are correct."
+						+ "<br>5. Output file name must be valid characters:"
+						+ "<br>		No / \\ : * ? \" | < > symbols."
+						+ "<br>6. All files to be read (excel sheet from Unicorn and tracker excel sheet)"
+						+ " and output file MUST be closed before running the program."
+						+ "<br>"
+						+ "<br>Info:"
+						+ "<br>-First file path is for the Unicorn excel sheet (sheet to be"
+						+ " extracted), second is for the tracker sheet."
+						+ "<br>-Make sure to update your Java software often."
+						+ "<br>-Output file will be in the same directory where the"
+						+ " application is executed."
+						+ "<br>"
+						+ "<br>Source code: <a href=\"https://github.com/nzulhilmi/Excel-Automation0.0\">"
+						+ "https://github.com/nzulhilmi/Excel-Automation0.0</a>"
+						+ "<br>"
+						+ "<br>More information about the API used to create this program: "
+						+ "<a href=\"https://poi.apache.org/spreadsheet/index.html\">"
+						+ "https://poi.apache.org/spreadsheet/index.html</a>"
+						+ "<br>"
+						+ "<br>Any problems please email nzulhilmi94@gmail.com or call:"
+						+ "<br>+6011-39377179 / +44 7843132106 (Whatsapp)"
+						+ "<br>"
+						+ "<br>Information for nerds:"
+						+ "<br>The following jar files are used:"
+						+ "<br>1. commons-codec-1.10.jar"
+						+ "<br>2. commons-collections4-4.1.jar"
+						+ "<br>3. commons-logging-1.2.jar"
+						+ "<br>4. curvesapi-1.04.jar"
+						+ "<br>5. junit-4.12.jar"
+						+ "<br>6. log4j-1.2.17.jar"
+						+ "<br>7. poi-3.16.jar"
+						+ "<br>8. poi-examples-3.16.jar"
+						+ "<br>9. poi-excelant-3.16.jar"
+						+ "<br>10. poi-ooxml-3.16.jar"
+						+ "<br>11. poi-ooxml-schemas-3.16.jar"
+						+ "<br>12. poi-scratchpad-3.16.jar"
+						+ "<br>13. xmlbeans-2.6.0.jar"
+						+ "<br>"
+						+ "<br>Recommended PC requirements: 4GB RAM, 2048x1536 screen resolution or better."
+						+ "<br>Runs on any OS as long as Java is installed."
+						+ "<br>"
+						+ "<br>"
+						+ "<br>by Nik"
+						+ "</font></left></html>");
+				//infoLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+				infoLabel.setEditable(false);
+				infoLabel.setMargin(new Insets(20, 20, 20, 20));
+				
+				infoDialog.add(infoLabel);
+				infoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				infoDialog.setTitle("Info");
+				infoDialog.setSize(new Dimension(1100, 1450));
+				infoDialog.setVisible(true);
+				infoDialog.setResizable(false);
+			}
+		});
+	}
+	
+	//GET and SET methods
 	public static void setTAMs(List<String> list) {
 		TAMs = list;
 	}

@@ -14,6 +14,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * A program which extracts data from Unicorn excel file and processes it alongside with one tracker file.
+ * Produces a separate output file.
+ * @author Nik Zulhilmi Nik Fuaad
+ *
+ */
 public class excelCompare {
 	private static List<String> columnsNeeded = new ArrayList<String>();
 	
@@ -49,7 +55,12 @@ public class excelCompare {
 		eaPanel.notifyFinish();
 	}
 	
-	//Read excel file
+	/**
+	 * Reads the content of an excel file and populates the data into an ArrayList.
+	 * @param file File to be read.
+	 * @param excelSheet ArrayList to be populated.
+	 * @param sheetName Name of the sheet name in the excel sheet.
+	 */
 	public static void read(File file, ArrayList<ArrayList<String>> excelSheet, String sheetName) {
 		try {
 	        //Create Workbook instance holding reference to .xlsx file
@@ -99,7 +110,14 @@ public class excelCompare {
 		}
 	}
 	
-	//Write the excel file
+	/**
+	 * Writes an excel file from an ArrayList.
+	 * @param file Not actually needed.
+	 * @param excelSheet ArrayList which contains all the data to be written.
+	 * @param sheetName The name of the sheet for the file.
+	 * @param filename Name of the file to be written.
+	 * @param filepath2 Not actually needed.
+	 */
 	public static void write(File file, ArrayList<ArrayList<String>> excelSheet, String sheetName, 
 			String filename, String filepath2) {
 		
@@ -138,7 +156,12 @@ public class excelCompare {
 		}
 	}
 	
-	//Execute the whole program
+	/**
+	 * Execute the whole process of extraction.
+	 * @param file1 File supposed to be the data from Unicorn.
+	 * @param file2 File supposed to be the tracker sheet.
+	 * @param filepath2 File where the program will produce the output file. Not needed at the moment.
+	 */
 	public static void execute(File file1, File file2, String filepath2) {
 		ArrayList<ArrayList<String>> excelSheet1 = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<String>> excelSheet2 = new ArrayList<ArrayList<String>>();
@@ -172,7 +195,12 @@ public class excelCompare {
 		write(file2, output2, sheetName1, outputFileName, filepath2);
 	}
 	
-	//Traverse through the columns, get the indexes of the columns needed
+	/**
+	 * Traverse through the columns of array, get the indexes of the columns needed and store
+	 * them in an array.
+	 * @param array Array which needs to be checked.
+	 * @return Returns and ArrayList of all the indexes.
+	 */
 	public static ArrayList<Integer> checkColumns(ArrayList<ArrayList<String>> array) {
 		ArrayList<Integer> columnNumbers = new ArrayList<Integer>();
 		
@@ -187,7 +215,12 @@ public class excelCompare {
 		return columnNumbers;
 	}
 	
-	//Traverse through the rows, get the indexes of the rows needed
+	/**
+	 * Traverse through the rows of array, get the indexes of the rows needed and
+	 * store them in an ArrayList.
+	 * @param array Array which needs to be checked.
+	 * @return Returns an ArrayList with the indexes.
+	 */
 	public static ArrayList<Integer> checkRows(ArrayList<ArrayList<String>> array) {
 		ArrayList<Integer> rowNumbers = new ArrayList<Integer>();
 		
@@ -202,7 +235,12 @@ public class excelCompare {
 		return rowNumbers;
 	}
 	
-	//Produce an output array with filtered columns and rows
+	/**
+	 * Filter the input array with only the required columns and rows.
+	 * Produces a new ArrayList.
+	 * @param array Array which needs to be filtered.
+	 * @return Returns a filtered ArrayList.
+	 */
 	public static ArrayList<ArrayList<String>> filter(ArrayList<ArrayList<String>> array) {
 		ArrayList<Integer> columnNumbers = checkColumns(array);
 		ArrayList<Integer> rowNumbers = checkRows(array);
@@ -229,7 +267,11 @@ public class excelCompare {
 		return output;
 	}
 	
-	//Helper method for filter
+	/**
+	 * Acts as a helper method for the filtering process.
+	 * @param array Array which needs to be filtered.
+	 * @return Returns an ArrayList to be used in filter method.
+	 */
 	public static ArrayList<ArrayList<String>> filter2(ArrayList<ArrayList<String>> array) {
 		ArrayList<ArrayList<String>> output = new ArrayList<ArrayList<String>>();
 		
@@ -246,7 +288,10 @@ public class excelCompare {
 		return output;
 	}
 	
-	//Sort/swap the columns
+	/**
+	 * Sort the columns according to the second excel sheet (tracker sheet)
+	 * @param array Array in which the columns needs to be sorted.
+	 */
 	public static void sortColumns(ArrayList<ArrayList<String>> array) {
 		int columnSize = array.get(0).size();
 		int rowSize = array.size();
@@ -265,7 +310,11 @@ public class excelCompare {
 		}
 	}
 	
-	//Helper method for formatDate
+	/**
+	 * Acts as a helper method for the method formatDate.
+	 * @param date Date to be formatted.
+	 * @return Returns a date in the form of a string.
+	 */
 	public static String formatDate(String date) {
 		int dateLength = date.length();
 		String temp = date.substring(0, dateLength - 2) + 
@@ -274,7 +323,11 @@ public class excelCompare {
 		return temp;
 	}
 	
-	//Change the format of the date
+	/**
+	 * Change the format of the date on excel sheet.
+	 * @param array Array in which the dates need to be formatted.
+	 * @param columnSize
+	 */
 	public static void formatDate_(ArrayList<String> array, int columnSize) {
 		//int columnSize = array.get(0).size() - 1;
 		
@@ -284,7 +337,10 @@ public class excelCompare {
 		array.set(columnSize - 1, temp2);
 	}
 	
-	//Rename the columns according to Mia's tracker sheet
+	/**
+	 * Rename the columns according to Mia's tracker sheet.
+	 * @param array 
+	 */
 	public static void renameColumns(ArrayList<ArrayList<String>> array) {
 		int columnSize = array.get(0).size();
 		
@@ -295,20 +351,33 @@ public class excelCompare {
 		}
 	}
 	
-	//Convert all the names in column 1 to lowercase
+	/**
+	 * Convert all the aliases/names in column 1 (SISRs) to lowercase.
+	 * @param array
+	 */
 	public static void convertLowerCase(ArrayList<String> array) {
 		String temp = array.get(1);
 		array.set(1, temp.toLowerCase());
 	}
 	
-	//Remove trailing zeros (cents) in the price value. i.e RM400.00 to RM400
+	/**
+	 * Remove cent digits from the price value.
+	 * ie. RM400.00 to RM400
+	 * @param array
+	 */
 	public static void correctPrice(ArrayList<String> array) {
 		String temp = array.get(6);
 		int length = temp.length();
 		array.set(6, temp.substring(0, length - 3));
 	}
 	
-	//Compare rows, if they are equal, returns true. False otherwise
+	/**
+	 * Compare rows between two ArrayLists.
+	 * Returns true if they are equal, false otherwise.
+	 * @param array1
+	 * @param array2
+	 * @return Returns a boolean if they are equal.
+	 */
 	public static boolean compareRows(ArrayList<String> array1, ArrayList<String> array2) {
 		int columnSize = array2.size();
 		
@@ -322,7 +391,12 @@ public class excelCompare {
 		return b1;
 	}
 	
-	//Check if the row is in the excel sheet array1, returns true if it's there. false otherwise
+	/**
+	 * Check for a row array2, if the row is already in array1, returns true. False otherwise.
+	 * @param array1 Original array.
+	 * @param array2 Array which represents a row in the excel sheet.
+	 * @return Returns a boolean value.
+	 */
 	public static boolean checkExistence(ArrayList<ArrayList<String>> array1, ArrayList<String> array2) {
 		int rowSize = array1.size();
 		
@@ -337,7 +411,11 @@ public class excelCompare {
 		return b1;
 	}
 	
-	//Add missing rows to array2.
+	/**
+	 * Check array2 rows with array1. If there are any missing rows in array2, will add them.
+	 * @param array1 Original array (Which contains the original data).
+	 * @param array2 New array where new rows will be added on top of the existing rows.
+	 */
 	public static void addRows(ArrayList<ArrayList<String>> array1, ArrayList<ArrayList<String>> array2) {
 		int rowSize = array1.size();
 		
@@ -348,7 +426,11 @@ public class excelCompare {
 		}
 	}
 	
-	//Remove commas, i.e. 20,000 to 20000
+	/**
+	 * Remove commas from price value.
+	 * ie. 20,000 to 20000.
+	 * @param array
+	 */
 	public static void removeComma(ArrayList<ArrayList<String>> array) {
 		int rowNum = array.size();
 		
@@ -360,12 +442,19 @@ public class excelCompare {
 		}
 	}
 	
-	//Create a text file with error message
+	/**
+	 * Create a text file with error messages.
+	 * Produces a new text file or overwrite existing ones.
+	 * @param errorMessage Message to be written to the text file.
+	 */
 	public void printError(String errorMessage) {
 		
 	}
 	
-	//Print array to system log output
+	/**
+	 * Print ArrayList to system log output. For debugging purposes.
+	 * @param array Array to be printed.
+	 */
 	public static void printArray(ArrayList<ArrayList<String>> array) {
 		int rows = array.size();
 		int columns = array.get(0).size();
@@ -378,7 +467,9 @@ public class excelCompare {
 		}
 	}
 	
-	//Get all the values from eaPanel
+	/**
+	 * Get all the values from eaPanel before executing the extraction.
+	 */
 	public static void assign() {
 		columnsNeeded = eaPanel.getColumns();
 		TAMs = eaPanel.getTAMs();

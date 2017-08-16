@@ -18,6 +18,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+/**
+ * Panel class for the GUI of Excel-Automation software.
+ * This is where the components of the GUI are programmed.
+ * @author Nik Zulhilmi Nik Fuaad
+ *
+ */
 public class eaPanel extends JPanel {
 	
 	//Text Fields
@@ -220,6 +226,9 @@ public class eaPanel extends JPanel {
 		setupPanel();
 	}
 	
+	/**
+	 * Adds all the components to the panel.
+	 */
 	private void setupPanel() {
 		this.setLayout(null);
 		this.add(TAMLabel);
@@ -236,6 +245,9 @@ public class eaPanel extends JPanel {
 		this.add(closeButton);
 	}
 	
+	/**
+	 * Begin extraction by calling the excelCompare main method.
+	 */
 	private static void extract() {
 		try {			
 			if(stringChecker(TAMsString) && stringChecker(columnsString)) {
@@ -255,7 +267,11 @@ public class eaPanel extends JPanel {
 		}
 	}
 	
-	//Check to make sure the input is in the correct format
+	/**
+	 * To check if the string input is in the correct format.
+	 * @param s String to be checked.
+	 * @return Returns false if string is in wrong format, true otherwise.
+	 */
 	public static Boolean stringChecker(String s) {
 		boolean b1 = true;
 		
@@ -280,7 +296,12 @@ public class eaPanel extends JPanel {
 		return b1;
 	}
 	
-	//Convert string to List<String>
+	/**
+	 * Convert the string (input from the TextField) into a list.
+	 * The list is to be passed to excelCompare to perform the extraction.
+	 * @param s String from the TextField.
+	 * @return Returns a list where the string is separated by commas.
+	 */
 	public static List<String> convert(String s) {
 		s = s.replaceAll("\\s+", ""); //remove all the white spaces
 		List<String> split = Arrays.asList(s.split(",")); //split string into elements separated by ','
@@ -288,7 +309,13 @@ public class eaPanel extends JPanel {
 		return split;
 	}
 	
-	//Same as convert, but for columns. Since the name of the columns has white space(s)
+	/**
+	 * Same as convert, but for columns. This is because the column names might contain more than one word.
+	 * Hence removing white spaces will cause problems. We don't want problems.
+	 * @param s String from the TextField.
+	 * @return Return a list where the elements are separated by commas.
+	 * 			Any remaining white spaces at the front/end of the elements will be removed.
+	 */
 	public static List<String> convertColumns(String s) {
 		List<String> split = Arrays.asList(s.split(","));
 		
@@ -304,7 +331,13 @@ public class eaPanel extends JPanel {
 		return split;
 	}
 	
-	//Check if files exist
+	/**
+	 * Check if the files exist and not a directory.
+	 * Files are to be processed.
+	 * @param f1 File to be processed.
+	 * @param f2 File to be processed.
+	 * @return Returns true if the files exist and not a directory. False otherwise.
+	 */
 	public static boolean fileChecker(String f1, String f2) {
 		boolean b1 = false;
 		
@@ -318,7 +351,10 @@ public class eaPanel extends JPanel {
 		return b1;
 	}
 	
-	//Notify when files don't exist or it is a directory
+	/**
+	 * Pops up a window saying there's a problem with the files.
+	 * Problem could be files don't exist or they are directories.
+	 */
 	public static void notifyFile() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -342,7 +378,9 @@ public class eaPanel extends JPanel {
 		});
 	}
 	
-	//Notify when inputs aren't filled properly
+	/**
+	 * Pops up a window saying the inputs aren't typed in correctly.
+	 */
 	public static void notifyInput() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -363,7 +401,9 @@ public class eaPanel extends JPanel {
 		});
 	}
 	
-	//Notify when program finishes extracting
+	/**
+	 * Pops up a window telling the program has finished extracting.
+	 */
 	public static void notifyFinish() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -383,7 +423,9 @@ public class eaPanel extends JPanel {
 		});
 	}
 	
-	//Create a dialog for the info
+	/**
+	 * Pops up a window where it contains all the information about the program.
+	 */
 	private static void createDialog() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override

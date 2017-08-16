@@ -2,6 +2,11 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**
+ * Frame class for the Excel-Automation GUI.
+ * @author Nik Zulhilmi Nik Fuaad
+ *
+ */
 public class eaFrame extends JFrame{
 	private eaPanel currentPanel;
 	
@@ -16,12 +21,18 @@ public class eaFrame extends JFrame{
 		GUI.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Creates a new panel to setup the frame.
+	 */
 	public eaFrame() {
 		currentPanel = new eaPanel();
 		
 		setupFrame();
 	}
 	
+	/**
+	 * Set the panel on the frame.
+	 */
 	private void setupFrame() {
 		getContentPane().setLayout(null);
 		this.setContentPane(currentPanel);

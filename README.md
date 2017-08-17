@@ -1,7 +1,7 @@
 # Excel-Automation0.0
 Excel Automation program which extracts information from Unicorn Excel File. The program reads in two files, excel file from Unicorn and excel tracker file. The program will produce an output file with the content from excel tracker file and updated data from Unicorn.
 
-## Things to check before running the program: ##
+## Things to check before running the program ##
   1. Make sure there is only ONE excel sheet/tab in once excel file.
   2. Make sure there are only letters/alphabets in TAMs and columns fields.
   3. For file path, use forward slashes '/' instead of backward slashes '\'.
@@ -12,7 +12,7 @@ Excel Automation program which extracts information from Unicorn Excel File. The
 
 
 
-## Info: ##
+## Info ##
 * First file path is for the Unicorn excel sheet (sheet to be extracted), second is for the tracker sheet.
 * Make sure to update your Java software often.
 * Output file will be in the same directory/folder where the application is executed.
@@ -21,14 +21,14 @@ Excel Automation program which extracts information from Unicorn Excel File. The
 
 
 
-## Recommended PC requirements: ##
+## Recommended PC requirements ##
   1. 4GB RAM
   2. 2048x1536 screen resolution or better.
   3. Java is installed.
 
 
 
-## Information for nerds: ##
+## Information for nerds ##
 
 The following jar file are used:
   1. commons-codec-1.10.jar
@@ -56,6 +56,11 @@ The following jar file are used:
   ```
   java -Xms2048m -Xmx8192m -jar Excel-Automation.jar
   ```
+
+
+
+## Java ##
+Latest Java version is recommended. Download and install Java at https://www.java.com/en/download/win10.jsp
 
 
 

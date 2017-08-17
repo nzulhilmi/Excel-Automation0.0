@@ -486,12 +486,12 @@ public class eaPanel extends JPanel {
 		});
 	}
 	
-/**
- * Check if a file is already opened.
- * NOTE: This method will not work on Linux machines. Works on other platforms.
- * @param s The path of the file to be checked.
- * @return Returns true if file is already opened.
- */
+	/**
+	 * Check if a file is already opened.
+	 * NOTE: This method will not work on Linux machines. Works on other platforms.
+	 * @param s The path of the file to be checked.
+	 * @return Returns true if file is already opened.
+	 */
 	public static boolean checkFileOpened(String s) {
 		boolean b1 = false;
 		

@@ -21,7 +21,7 @@ Excel Automation program which extracts information from Unicorn Excel File. The
 
 
 
-Recommended PC requirements:
+## Recommended PC requirements:##
   1. 4GB RAM
   2. 2048x1536 screen resolution or better.
 
@@ -31,7 +31,7 @@ More information about the API used to create this program: https://poi.apache.o
 
 
 
-Information for nerds:
+## Information for nerds: ##
 
   The following jar file are used:
     1. commons-codec-1.10.jar

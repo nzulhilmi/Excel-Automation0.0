@@ -199,7 +199,8 @@ public class eaPanel extends JPanel {
 				outputNameString = outputNameTextField.getText();
 				
 				//check if files are ok
-				if(fileChecker(file1String, file2String)) {
+				if(fileChecker(file1String, file2String) && !checkFileOpened(file1String)
+						&& !checkFileOpened(file2String)) {
 					//run excel extraction
 					extract();
 				}
@@ -497,6 +498,31 @@ public class eaPanel extends JPanel {
 				infoDialog.setResizable(false);
 			}
 		});
+	}
+	
+/**
+ * Check if a file is already opened.
+ * NOTE: This method will not work on Linux machines. Works on other platforms.
+ * @param s The path of the file to be checked.
+ * @return Returns true if file is already opened.
+ */
+	public static boolean checkFileOpened(String s) {
+		boolean b1 = false;
+		
+		File file = new File(s);
+		
+		//Try to rename the file with the same name
+		File sameName = new File(s);
+		
+		if(file.renameTo(sameName)) {
+			//File is closed. Do nothing
+		}
+		else {
+			//File is opened
+			b1 = true;
+		}
+		
+		return b1;
 	}
 	
 	//GET and SET methods

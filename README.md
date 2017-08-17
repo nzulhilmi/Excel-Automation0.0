@@ -24,6 +24,7 @@ Excel Automation program which extracts information from Unicorn Excel File. The
 ## Recommended PC requirements: ##
   1. 4GB RAM
   2. 2048x1536 screen resolution or better.
+  3. Java is installed.
 
 
 

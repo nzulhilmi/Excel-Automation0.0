@@ -13,11 +13,11 @@ Excel Automation program which extracts information from Unicorn Excel File. The
 
 
 ## Info: ##
-  -First file path is for the Unicorn excel sheet (sheet to be extracted), second is for the tracker sheet.
-  -Make sure to update your Java software often.
-  -Output file will be in the same directory/folder where the application is executed.
-  -One of the methods might not work on Linux machines. Please do read the instruction above.
-  -Runs on any OS as long as the correct Java version is installed.
+* First file path is for the Unicorn excel sheet (sheet to be extracted), second is for the tracker sheet.
+* Make sure to update your Java software often.
+* Output file will be in the same directory/folder where the application is executed.
+* One of the methods might not work on Linux machines. Please do read the instruction above.
+* Runs on any OS as long as the correct Java version is installed.
 
 
 

@@ -33,29 +33,32 @@ More information about the API used to create this program: https://poi.apache.o
 
 ## Information for nerds: ##
 
-  The following jar file are used:
-    1. commons-codec-1.10.jar
-    2. commons-collections.4-4.1.jar
-    3. commons-logging-1.2.jar
-    4. curvesapi-1.04.jar
-    5. junit-4.12.jar
-    6. log4j-1.2.17.jar
-    7. poi-3.16.jar
-    8. poi-examples.3.16.jar
-    9. poi-excelant-3.16.jar
-    10. poi-ooxml-3.16.jar
-    11. poi-ooxml-schemas-3.16.jar
-    12. poi-scratchpad-3.16.jar
-    13. xmlbeans-2.6.0.jar
+The following jar file are used:
+  1. commons-codec-1.10.jar
+  2. commons-collections.4-4.1.jar
+  3. commons-logging-1.2.jar
+  4. curvesapi-1.04.jar
+  5. junit-4.12.jar
+  6. log4j-1.2.17.jar
+  7. poi-3.16.jar
+  8. poi-examples.3.16.jar
+  9. poi-excelant-3.16.jar
+  10. poi-ooxml-3.16.jar
+  11. poi-ooxml-schemas-3.16.jar
+  12. poi-scratchpad-3.16.jar
+  13. xmlbeans-2.6.0.jar
 
   In case of not enough heap/memory size because the excel file is too big, just split the excel file into smaller files.
   Or you can type in the following command before running the program:
   
   For 4GB RAM computers:
-  > java -Xms1024m -Xmx4096m -jar Excel-Automation.jar
-  
+  ```
+  java -Xms1024m -Xmx4096m -jar Excel-Automation.jar
+  ```
   For 8GB RAM computers:
-  > java -Xms2048m -Xmx8192m -jar Excel-Automation.jar
+  ```
+  java -Xms2048m -Xmx8192m -jar Excel-Automation.jar
+  ```
 
 
 

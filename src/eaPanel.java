@@ -200,7 +200,7 @@ public class eaPanel extends JPanel {
 				
 				//check if files are ok
 				if(fileChecker(file1String, file2String) && !checkFileOpened(file1String)
-						&& !checkFileOpened(file2String)) {
+						&& !checkFileOpened(file2String) && !checkOutputFile(outputNameString)) {
 					//run excel extraction
 					extract();
 				}
@@ -506,6 +506,27 @@ public class eaPanel extends JPanel {
 		else {
 			//File is opened
 			b1 = true;
+		}
+		
+		return b1;
+	}
+	
+	/**
+	 * Check if output file exists, and if so, check if it is already opened.
+	 * @param s File name to be checked.
+	 * @return Returns true if file exists and opened, false otherwise.
+	 */
+	public static boolean checkOutputFile(String s) {
+		boolean b1 = false;
+		
+		String name = s + ".xlsx";
+		
+		File file = new File(name);
+		
+		if(file.exists()) {
+			if(checkFileOpened(name)) {
+				b1 = true;
+			}
 		}
 		
 		return b1;

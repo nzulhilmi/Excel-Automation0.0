@@ -434,7 +434,7 @@ public class eaPanel extends JPanel {
 				// TODO Auto-generated method stub
 				JTextPane infoLabel = new JTextPane();
 				infoLabel.setContentType("text/html");
-				infoLabel.setText("<html><left><font size=\"5\">"
+				infoLabel.setText("<html><left><font size=\"6\">"
 						+ "Things to check before extracting: "
 						+ "<br>1. There is only ONE excel sheet/tab in one excel file."
 						+ "<br>2. There are only letters/alphabets in TAMs and columns fields."
@@ -463,21 +463,7 @@ public class eaPanel extends JPanel {
 						+ "<br>Any problems please email nzulhilmi94@gmail.com or call:"
 						+ "<br>+6011-39377179 / +44 7843132106 (Whatsapp)"
 						+ "<br>"
-						+ "<br>Information for nerds:"
-						+ "<br>The following jar files are used:"
-						+ "<br>1. commons-codec-1.10.jar"
-						+ "<br>2. commons-collections4-4.1.jar"
-						+ "<br>3. commons-logging-1.2.jar"
-						+ "<br>4. curvesapi-1.04.jar"
-						+ "<br>5. junit-4.12.jar"
-						+ "<br>6. log4j-1.2.17.jar"
-						+ "<br>7. poi-3.16.jar"
-						+ "<br>8. poi-examples-3.16.jar"
-						+ "<br>9. poi-excelant-3.16.jar"
-						+ "<br>10. poi-ooxml-3.16.jar"
-						+ "<br>11. poi-ooxml-schemas-3.16.jar"
-						+ "<br>12. poi-scratchpad-3.16.jar"
-						+ "<br>13. xmlbeans-2.6.0.jar"
+						+ "<br> One of the methods might not work on Linux machines. Please do read the instructions above."
 						+ "<br>"
 						+ "<br>Visit the source code website for full documentation with Javadoc comments."
 						+ "<br>Recommended PC requirements: 4GB RAM, 2048x1536 screen resolution or better."
@@ -493,7 +479,7 @@ public class eaPanel extends JPanel {
 				infoDialog.add(infoLabel);
 				infoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				infoDialog.setTitle("Info");
-				infoDialog.setSize(new Dimension(1100, 1450));
+				infoDialog.setSize(new Dimension(1100, 1100));
 				infoDialog.setVisible(true);
 				infoDialog.setResizable(false);
 			}

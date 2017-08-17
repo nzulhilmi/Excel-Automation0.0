@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,11 +33,17 @@ public class excelCompare {
 	private static String filepath1;
 	private static String filepath2;
 	private static String outputFile;
+	private static boolean logFileBoolean;
 	
 	//The number represent the indexes (starts at 0)
 	final static int[] numberColumns = {6, 7};
 			
 	public static void main(String[] args) throws IOException {
+		if(logFileBoolean) {
+			PrintStream out = new PrintStream(new FileOutputStream("log.txt"));
+			System.setOut(out);
+		}
+		
 		assign();
 		
 		File file1 = new File(filepath1);
@@ -471,6 +478,7 @@ public class excelCompare {
 	 * Get all the values from eaPanel before executing the extraction.
 	 */
 	public static void assign() {
+		logFileBoolean = eaPanel.getLogFileBoolean();
 		columnsNeeded = eaPanel.getColumns();
 		TAMs = eaPanel.getTAMs();
 		filepath1 = eaPanel.getFile1();

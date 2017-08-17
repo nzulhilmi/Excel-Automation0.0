@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -58,6 +59,9 @@ public class eaPanel extends JPanel {
 	private static JDialog inputErrorDialog = new JDialog();
 	
 	//Others
+	private static boolean logFileBoolean = false;
+	private static JCheckBox logCheckBox;
+	
 	private static List<String> columns = new ArrayList<String>(Arrays.asList(
 			"TAM", "SSR", "Organization Name", "Contract Title", 
 			"Contract Number", "Schedule Name", "Value", "TPID",
@@ -185,6 +189,10 @@ public class eaPanel extends JPanel {
 			}
 		});
 		
+		logCheckBox = new JCheckBox("Log to text file");
+		logCheckBox.setSelected(false);
+		logCheckBox.setBounds(50, 610, 120, 60);
+		
 		extractButton = new JButton("Extract");
 		extractButton.setFont(new Font("Arial", Font.PLAIN, 24));
 		extractButton.setBounds(200, 550, 150, 50);
@@ -201,6 +209,15 @@ public class eaPanel extends JPanel {
 				//check if files are ok
 				if(fileChecker(file1String, file2String) && !checkFileOpened(file1String)
 						&& !checkFileOpened(file2String) && !checkOutputFile(outputNameString)) {
+					
+					//Check if check box is selected
+					if(logCheckBox.isSelected()) {
+						logFileBoolean = true;
+					}
+					else {
+						logFileBoolean = false;
+					}
+					
 					//run excel extraction
 					extract();
 				}
@@ -223,7 +240,6 @@ public class eaPanel extends JPanel {
 			}
 		});
 		
-		
 		setupPanel();
 	}
 	
@@ -244,6 +260,7 @@ public class eaPanel extends JPanel {
 		this.add(infoButton);
 		this.add(extractButton);
 		this.add(closeButton);
+		this.add(logCheckBox);
 	}
 	
 	/**
@@ -452,6 +469,8 @@ public class eaPanel extends JPanel {
 						+ "<br>-Make sure to update your Java software often."
 						+ "<br>-Output file will be in the same directory where the"
 						+ " application is executed."
+						+ "<br>-Leave the 'Log to text file' box unchecked. Unless there is a problem and the program "
+						+ "needs to be debugged."
 						+ "<br>"
 						+ "<br>Source code: <a href=\"https://github.com/nzulhilmi/Excel-Automation0.0\">"
 						+ "https://github.com/nzulhilmi/Excel-Automation0.0</a>"
@@ -571,5 +590,9 @@ public class eaPanel extends JPanel {
 	
 	public static String getOutputFileName() {
 		return outputNameString;
+	}
+	
+	public static boolean getLogFileBoolean() {
+		return logFileBoolean;
 	}
 }
